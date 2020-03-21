@@ -1,3 +1,18 @@
+/********************************************************************
+* Description: probekins.h
+*
+*   Derived from a work by Fred Proctor & Will Shackleford
+*   modified by Timo Erdmann
+*
+* Author:
+* License: GPL Version 2
+* System: Linux
+*    
+* Copyright (c) 2004 All rights reserved.
+*
+* Last change:
+********************************************************************/
+
 #ifndef PROBEKINS_H
 #define PROBEKINS_H
 

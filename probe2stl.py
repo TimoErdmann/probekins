@@ -49,9 +49,9 @@ def readpoints():
 
 
 def main():
+
     global opts
     (progdir, progname) = os.path.split(sys.argv[0])
-
     usage = "usage: %prog [options] file.stl"
     parser = OptionParser(usage=usage)
     parser.disable_interspersed_args()
@@ -59,7 +59,7 @@ def main():
     (opts, args) = parser.parse_args()
 
     points = readpoints()
-
+      
     if opts.inifile:
         import linuxcnc
         inifile = linuxcnc.ini(opts.inifile)

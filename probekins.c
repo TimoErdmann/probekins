@@ -25,6 +25,8 @@ static int key = SHMEM_KEY;
 static mesh_struct *mp = 0;
 static int size = 512;
 
+static double last_t = 0.0;
+
 static int tests, faces, hits;
 static double z_dir[3] = {0,0,1};
 static long long int total_nsec;
@@ -107,18 +109,25 @@ static inline double z_correct(double x, double y)
     where[2] = 0;
 
     for (i = 0; i < mp->n_faces; i++) {
-	faces++;
-	if (lineIntersectsTriangle(where, z_dir,
-				  mp->vertices[fp[i][0]],
-				  mp->vertices[fp[i][1]],
-				  mp->vertices[fp[i][2]],
-				  &t) == INSIDE) {
-	    hits++;
-	    break;
-	}
+		faces++;
+		if (lineIntersectsTriangle(where, z_dir,
+					  mp->vertices[fp[i][0]],
+					  mp->vertices[fp[i][1]],
+					  mp->vertices[fp[i][2]],
+					  &t) == INSIDE) {
+			hits++;
+			break;
+		}
     }
+    // if current pos is not inside any vertices we return the last value
+    // to prevent dropping to 0
+    if (i == mp->n_faces){
+		t = last_t;
+    }
+    
     total_nsec += (rtapi_get_time() - start);
     *(haldata->delta_z) = t;
+    last_t = t;
     return t;
 }
 
@@ -172,7 +181,7 @@ int kinematicsHome(EmcPose * world,
 
 KINEMATICS_TYPE kinematicsType()
 {
-    return KINEMATICS_BOTH;
+    return KINEMATICS_IDENTITY;
 }
 
 EXPORT_SYMBOL(kinematicsType);
