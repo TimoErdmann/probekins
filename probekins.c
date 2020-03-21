@@ -181,7 +181,7 @@ int kinematicsHome(EmcPose * world,
 
 KINEMATICS_TYPE kinematicsType()
 {
-    return KINEMATICS_IDENTITY;
+    return KINEMATICS_BOTH;
 }
 
 EXPORT_SYMBOL(kinematicsType);
